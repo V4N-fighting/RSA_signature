@@ -48,6 +48,7 @@ interface State {
 	selectedCheckingFile: any
 	fileChecking: any
 	resultFileChecking: any
+	isFalse: boolean
 }
 
 export default function DigitalSignature() {
@@ -70,6 +71,7 @@ export default function DigitalSignature() {
 		selectedCheckingFile: null,
 		fileChecking: null,
 		resultFileChecking: null,
+		isFalse: false,
 	})
 
 	const generateTwoPrime = (n: number) => {
@@ -90,6 +92,7 @@ export default function DigitalSignature() {
 				...values,
 				message: 'Cần khởi tạo 2 số nguyên tố ngẫu nhiên',
 				openSnackbar: true,
+				isFalse: true
 			})
 			return
 		} else {
@@ -212,6 +215,7 @@ export default function DigitalSignature() {
 				...values,
 				message: 'Bạn cần khởi tạo khóa',
 				openSnackbar: true,
+				isFalse: true
 			})
 			return
 		}
@@ -225,6 +229,7 @@ export default function DigitalSignature() {
 			message: 'Ký thành công',
 			openSnackbar: true,
 			fileResult: txtFileContent,
+			isFalse: false
 		})
 	}
 
@@ -243,6 +248,7 @@ export default function DigitalSignature() {
 				...values,
 				message: 'Bạn cần ký văn bản',
 				openSnackbar: true,
+				isFalse: true
 			})
 			return
 		}
@@ -260,6 +266,7 @@ export default function DigitalSignature() {
 				message: 'Xác thực thành công',
 				openSnackbar: true,
 				resultFileChecking: txtFileContentChecking,
+				isFalse: false
 			})
 		} else {
 			setValues({
@@ -267,6 +274,7 @@ export default function DigitalSignature() {
 				message: 'Xác thực thất bại',
 				openSnackbar: true,
 				resultFileChecking: txtFileContentChecking,
+				isFalse: true
 			})
 		}
 	}
@@ -300,7 +308,7 @@ export default function DigitalSignature() {
 							autoHideDuration={6000}
 							onClose={handleCloseSnackbar}
 						>
-							<Alert onClose={handleCloseSnackbar} severity="info" sx={{ width: '100%' }}>
+							<Alert onClose={handleCloseSnackbar} severity="info" sx={{ width: '100%', backgroundColor: values.isFalse ? 'red' : 'green', color: 'white' }}>
 								<Typography variant="body2">{values.message}</Typography>
 							</Alert>
 						</Snackbar>
